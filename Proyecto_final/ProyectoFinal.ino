@@ -1,4 +1,3 @@
-//Estefanía Laverde Becerra
 //Girasol artificial
 
 #include <ListLib.h>
@@ -18,33 +17,33 @@ void setup() {
   // put your setup code here, to run once:
   servoMotor.attach(9);
   pinMode(fotoc, INPUT);
-
+  
   Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
   int gr=0;
-  while(gr<=180){ //Barrido para guardar los datos leídos por la fotoresistencia
+  while(gr<180){ //Barrido para guardar los datos leídos por la fotoresistencia
     servoMotor.write(gr);
     valor_fc=analogRead(fotoc);
-
+    Serial.print(gr);
+    Serial.print(",");
     Serial.println(valor_fc);
-
+    
     datos.Add(valor_fc);
     gr+=1;
-    delay(15);
+    delay(10);
   }
-  Serial.print("Hay ");
-  Serial.print(datos.Count());
-  Serial.println(" elementos en la lista.");
+  //Serial.print("Hay ");
+  //Serial.print(datos.Count());
+  //Serial.println(" elementos en la lista.");
 
-  mini=datos[0]; //Proceso para guardar el dato más pequeño medido y su correspondiente ángulo
   int i=0;
-  while(i<=180){
-    Serial.print("Estos son los datos de la lista: ");
-    Serial.println(datos[i]);
+  mini=datos[i]; //Proceso para guardar el dato más pequeño medido y su correspondiente ángulo
+  while(i<180){
+    //Serial.print("Estos son los datos de la lista: ");
+    //Serial.println(datos[i]);
     if(datos[i]<mini){
       mini=datos[i];
       min_index=i;
@@ -59,9 +58,13 @@ void loop() {
   grados=min_index;
   Serial.print("Los grados escritos en el servo son: "); //No es necesario hacer una conversión porque la lista tiene 180 elementos y el correspondiente al menor grado es el usado en el servo
   Serial.println(grados);
-
-  servoMotor.write(grados); //Se coloca en la posición de máxima exposición (mínima resistencia
+  
+  servoMotor.write(grados); //Se coloca en la posición de máxima exposición (mínima resistencia)
   datos.Clear();
+  int x=0;
+  
+  Serial.println(datos.Count());
+  delay(6000); //Se repite el proceso de barrido cada 6 segundos
 
-  delay(8000); //Se repite el proceso de barrido cada 6 segundos
+  
 }
