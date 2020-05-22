@@ -17,7 +17,7 @@ void setup() {
   // put your setup code here, to run once:
   servoMotor.attach(9);
   pinMode(fotoc, INPUT);
-  
+
   Serial.begin(9600);
 }
 
@@ -30,10 +30,10 @@ void loop() {
     Serial.print(gr);
     Serial.print(",");
     Serial.println(valor_fc);
-    
+
     datos.Add(valor_fc);
     gr+=1;
-    delay(10);
+    delay(15);
   }
   //Serial.print("Hay ");
   //Serial.print(datos.Count());
@@ -58,13 +58,14 @@ void loop() {
   grados=min_index;
   Serial.print("Los grados escritos en el servo son: "); //No es necesario hacer una conversión porque la lista tiene 180 elementos y el correspondiente al menor grado es el usado en el servo
   Serial.println(grados);
-  
+
   servoMotor.write(grados); //Se coloca en la posición de máxima exposición (mínima resistencia)
   datos.Clear();
   int x=0;
-  
+
   Serial.println(datos.Count());
   delay(6000); //Se repite el proceso de barrido cada 6 segundos
+  servoMotor.write(0);
+  delay(700);
 
-  
 }
