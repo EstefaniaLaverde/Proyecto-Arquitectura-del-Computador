@@ -65,6 +65,8 @@ void loop() {
 
   Serial.println(datos.Count());
   delay(6000); //Se repite el proceso de barrido cada 6 segundos
+
+  
   servoMotor.write(0);
   delay(700);
 
